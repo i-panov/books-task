@@ -11,8 +11,8 @@ class m250316_094158_init extends Migration
             'title' => $this->string()->notNull(),
             'pageCount' => $this->integer()->notNull()->defaultValue(0),
             'publishedDate' => $this->date()->notNull(),
-            'shortDescription' => $this->text()->notNull()->defaultValue(''),
-            'longDescription' => $this->text()->notNull()->defaultValue(''),
+            'shortDescription' => $this->text()->notNull(),
+            'longDescription' => $this->text()->notNull(),
             'status' => $this->string()->notNull(),
         ]);
 
@@ -23,17 +23,17 @@ class m250316_094158_init extends Migration
             'name' => $this->string()->notNull()->unique(),
         ]);
 
-        $this->createTable('author_books', [
+        $this->createTable('books_authors', [
             'author_id' => $this->integer()->notNull(),
             'isbn' => $this->string()->notNull(),
         ]);
 
-        $this->addPrimaryKey('author_books_pk', 'author_books', ['author_id', 'isbn']);
+        $this->addPrimaryKey('books_authors_pk', 'books_authors', ['author_id', 'isbn']);
 
-        $this->addForeignKey('author_books_author_id_fk', 'author_books', 'author_id',
+        $this->addForeignKey('books_authors_author_id_fk', 'books_authors', 'author_id',
             'authors', 'id', 'CASCADE', 'CASCADE');
 
-        $this->addForeignKey('author_books_isbn_fk', 'author_books', 'isbn',
+        $this->addForeignKey('books_authors_isbn_fk', 'books_authors', 'isbn',
             'books', 'isbn', 'CASCADE', 'CASCADE');
 
         $this->createTable('categories', [
@@ -47,21 +47,21 @@ class m250316_094158_init extends Migration
 
         $this->insert('categories', ['name' => 'NEW']);
 
-        $this->createTable('book_categories', [
+        $this->createTable('books_categories', [
             'isbn' => $this->string()->notNull(),
             'category_id' => $this->integer()->notNull(),
         ]);
 
-        $this->addPrimaryKey('book_categories_pk', 'book_categories', ['isbn', 'category_id']);
+        $this->addPrimaryKey('books_categories_pk', 'books_categories', ['isbn', 'category_id']);
 
-        $this->addForeignKey('book_categories_isbn_fk', 'book_categories', 'isbn',
+        $this->addForeignKey('books_categories_isbn_fk', 'books_categories', 'isbn',
             'books', 'isbn', 'CASCADE', 'CASCADE');
 
-        $this->addForeignKey('book_categories_category_id_fk', 'book_categories', 'category_id',
+        $this->addForeignKey('books_categories_category_id_fk', 'books_categories', 'category_id',
             'categories', 'id', 'CASCADE', 'CASCADE');
     }
 
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m250316_094158_init cannot be reverted.\n";
 

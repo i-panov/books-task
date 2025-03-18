@@ -2,16 +2,15 @@
 
 namespace app\models;
 
-use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * @property int $id
- * @property int $parent_id
+ * @property ?int $parent_id
  * @property string $name
  *
- * @property-read Category $parent
+ * @property-read ?Category $parent
  * @property-read Book[] $books
  */
 class Category extends ActiveRecord
@@ -26,12 +25,8 @@ class Category extends ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'parent_id']);
     }
 
-    /**
-     * @throws InvalidConfigException
-     */
     public function getBooks(): ActiveQuery
     {
-        return $this->hasMany(Book::class, ['category_id' => 'id'])
-            ->viaTable('books_categories', ['category_id' => 'id']);
+        return $this->hasMany(Book::class, ['category_id' => 'id']);
     }
 }

@@ -45,7 +45,7 @@ class Book extends ActiveRecord
 
     public function getCategory(): ActiveQuery
     {
-        return $this->hasMany(Category::class, ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
     public function getAllCategories(): array

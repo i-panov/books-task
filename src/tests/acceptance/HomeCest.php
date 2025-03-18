@@ -6,7 +6,7 @@ class HomeCest
 {
     public function ensureThatHomePageWorks(AcceptanceTester $I)
     {
-        $I->amOnPage(Url::toRoute('/site/index'));        
+        $I->amOnPage(Url::toRoute('/admin/index'));
         $I->see('My Company');
         
         $I->seeLink('About');

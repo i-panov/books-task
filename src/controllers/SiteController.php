@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Book;
 use app\models\Category;
+use app\models\CategoryBooksForm;
 use yii\web\Controller;
 
 class SiteController extends Controller
@@ -28,10 +29,29 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionCategory(int $categoryId): string
+    public function actionCategory(int $categoryId, string $query = '', string $searchBy = '', array $statuses = []): string
     {
+        $category = Category::findOne($categoryId);
+        $booksQuery = $category->getBooks();
+        $form = new CategoryBooksForm();
+
+        if ($form->load(\Yii::$app->request->get()) && $form->validate()) {
+            if ($form->searchBy === 'title') {
+                $booksQuery->andWhere(['like', 'title', $form->query]);
+            } else if ($form->searchBy === 'author') {
+                $booksQuery->innerJoinWith('authors a')
+                    ->andWhere(['like', 'a.name', $form->query]);
+            }
+
+            if ($form->statuses) {
+                $booksQuery->andWhere(['status' => $form->statuses]);
+            }
+        }
+
         return $this->render('category', [
-            'category' => Category::findOne($categoryId),
+            'category' => $category,
+            'books' => $booksQuery->all(),
+            'formModel' => $form,
         ]);
     }
 

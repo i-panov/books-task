@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /** @var \yii\web\View $this */
@@ -27,3 +28,4 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <p>Количество страниц: <?= $book->pageCount ?></p>
 <p>ISBN: <?= $book->isbn ?></p>
+<p>Авторы: <?= implode(', ', ArrayHelper::getColumn($book->authors, 'name')) ?></p>

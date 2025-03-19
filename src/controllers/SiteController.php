@@ -2,10 +2,10 @@
 
 namespace app\controllers;
 
+use app\forms\CategoryBooksForm;
+use app\forms\ContactForm;
 use app\models\Book;
 use app\models\Category;
-use app\models\CategoryBooksForm;
-use app\models\ContactForm;
 use Yii;
 use yii\web\Controller;
 

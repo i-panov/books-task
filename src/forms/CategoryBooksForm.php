@@ -1,7 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\forms;
 
+use app\models\Book;
 use yii\base\Model;
 use yii\helpers\Html;
 

@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\LoginForm;
+use app\forms\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;

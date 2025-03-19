@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'books_task',
     'basePath' => dirname(__DIR__),
+    'language' => 'ru_RU',
     'name' => 'Books task',
     'bootstrap' => ['log'],
     'aliases' => [
@@ -23,6 +24,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['admin/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

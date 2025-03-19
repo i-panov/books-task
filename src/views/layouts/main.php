@@ -18,6 +18,21 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
+function renderLogoutButton(): string
+{
+    return implode('', [
+        '<li class="nav-item">',
+            Html::beginForm(['/admin/logout']),
+            Html::submitButton(
+                'Выйти (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'nav-link btn btn-link logout']
+            ),
+            Html::endForm(),
+        '</li>',
+    ]);
+}
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,24 +51,21 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
+
+    $navItems = [
+        ['label' => 'Админка', 'url' => ['admin/index']],
+        ['label' => 'Обратная связь', 'url' => ['site/contact']],
+    ];
+
+    if (!Yii::$app->user->isGuest) {
+        $navItems[] = renderLogoutButton();
+    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/admin/index']],
-            ['label' => 'About', 'url' => ['/admin/about']],
-            ['label' => 'Contact', 'url' => ['/admin/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/admin/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/admin/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'items' => $navItems,
     ]);
+
     NavBar::end();
     ?>
 </header>

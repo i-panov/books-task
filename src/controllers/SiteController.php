@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Book;
 use app\models\Category;
 use app\models\CategoryBooksForm;
+use app\models\ContactForm;
+use Yii;
 use yii\web\Controller;
 
 class SiteController extends Controller
@@ -14,10 +16,6 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }
@@ -29,7 +27,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionCategory(int $categoryId, string $query = '', string $searchBy = '', array $statuses = []): string
+    public function actionCategory(int $categoryId): string
     {
         $category = Category::findOne($categoryId);
         $booksQuery = $category->getBooks();
@@ -59,6 +57,19 @@ class SiteController extends Controller
     {
         return $this->render('book', [
             'book' => Book::findOne($isbn),
+        ]);
+    }
+
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            Yii::$app->session->setFlash('contactFormSubmitted');
+
+            return $this->refresh();
+        }
+        return $this->render('contact', [
+            'model' => $model,
         ]);
     }
 }

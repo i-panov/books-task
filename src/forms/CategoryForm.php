@@ -7,7 +7,7 @@ use yii\base\Model;
 
 class CategoryForm extends Model
 {
-    public ?int $parentId;
+    public ?string $parentId = null;
     public string $name = '';
 
     public function attributeLabels(): array
@@ -22,7 +22,7 @@ class CategoryForm extends Model
     {
         return [
             ['name', 'required'],
-            ['categoryId', 'exist', 'targetClass' => Category::class, 'targetAttribute' => 'id'],
+            ['parentId', 'exist', 'targetClass' => Category::class, 'targetAttribute' => 'id'],
         ];
     }
 }

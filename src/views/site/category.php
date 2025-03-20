@@ -18,6 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $statuses = array_combine($formModel->allowedStatuses, $formModel->allowedStatuses);
 
+if (!Yii::$app->user->isGuest) {
+    echo Html::a('Редактировать категорию', ['admin/category', 'categoryId' => $category->id], [
+        'class' => 'btn btn-link',
+    ]);
+}
+
 ?>
 
 <h3>Книги</h3>

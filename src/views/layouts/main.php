@@ -23,7 +23,7 @@ function renderLogoutButton(): string
 {
     return implode('', [
         '<li class="nav-item">',
-            Html::beginForm(['/admin/logout']),
+            Html::beginForm(['admin/logout']),
             Html::submitButton(
                 'Выйти (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'nav-link btn btn-link logout']
@@ -53,11 +53,11 @@ function renderLogoutButton(): string
     ]);
 
     $navItems = [
-        ['label' => 'Админка', 'url' => ['admin/index']],
         ['label' => 'Обратная связь', 'url' => ['site/contact']],
     ];
 
     if (!Yii::$app->user->isGuest) {
+        $navItems[] = ['label' => 'Добавить категорию', 'url' => ['admin/category']];
         $navItems[] = renderLogoutButton();
     }
 

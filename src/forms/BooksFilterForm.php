@@ -9,7 +9,7 @@ use yii\helpers\Html;
 /**
  * @property-read array $allowedStatuses
  */
-class CategoryBooksForm extends Model
+class BooksFilterForm extends Model
 {
     public string $query = '';
     public string $searchBy = '';

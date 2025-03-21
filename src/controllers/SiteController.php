@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\forms\CategoryBooksForm;
+use app\forms\BooksFilterForm;
 use app\forms\ContactForm;
 use app\models\Book;
 use app\models\Category;
@@ -31,7 +31,7 @@ class SiteController extends Controller
     {
         $category = Category::findOne($categoryId);
         $booksQuery = $category->getBooks();
-        $form = new CategoryBooksForm();
+        $form = new BooksFilterForm();
 
         if ($form->load(\Yii::$app->request->get()) && $form->validate()) {
             if ($form->searchBy === 'title') {

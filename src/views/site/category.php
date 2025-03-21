@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /** @var \yii\web\View $this */
 /** @var \app\models\Category $category */
 /** @var \app\models\Book[] $books */
-/** @var \app\forms\CategoryBooksForm $formModel */
+/** @var \app\forms\BooksFilterForm $formModel */
 
 $this->title = "Категория: {$category->name}";
 

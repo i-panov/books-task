@@ -13,6 +13,8 @@ if ($formModel->name) {
     $this->title = "Создание категории";
 }
 
+$this->params['breadcrumbs'][] = $this->title;
+
 $form = ActiveForm::begin();
 
 echo $form->field($formModel, 'name');

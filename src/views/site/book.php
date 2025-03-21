@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= Html::img($book->thumbnailPath, [
     'alt' => 'Image not found',
-    'onerror' => 'this.src = "https://fakeimg.pl/350x200/?text=Image+not+found"',
+    'onerror' => 'this.src = "/images/alt.png"',
 ]) ?>
 
 <br>
@@ -29,3 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>Количество страниц: <?= $book->pageCount ?></p>
 <p>ISBN: <?= $book->isbn ?></p>
 <p>Авторы: <?= implode(', ', ArrayHelper::getColumn($book->authors, 'name')) ?></p>
+
+<div class="form-group">
+    <?php
+    echo Html::a('Редактировать', ['admin/book', 'isbn' => $book->isbn], ['class' => 'btn btn-link']);
+    echo Html::beginForm(['admin/book', 'isbn' => $book->isbn], 'delete');
+    echo Html::submitButton('Удалить', ['class' => 'btn btn-link', 'data-confirm' => 'Вы действительно хотите удалить книгу?']);
+    echo Html::endForm();
+    ?>
+</div>

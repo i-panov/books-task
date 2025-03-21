@@ -58,6 +58,7 @@ function renderLogoutButton(): string
 
     if (!Yii::$app->user->isGuest) {
         $navItems[] = ['label' => 'Добавить категорию', 'url' => ['admin/category']];
+        $navItems[] = ['label' => 'Добавить книгу', 'url' => ['admin/book']];
         $navItems[] = renderLogoutButton();
     }
 

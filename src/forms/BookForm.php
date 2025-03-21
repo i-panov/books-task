@@ -23,7 +23,7 @@ class BookForm extends Model
     public string $shortDescription = '';
     public string $longDescription = '';
     public string $status = '';
-    public ?int $categoryId;
+    public ?int $categoryId = null;
     public string $authors = '';
 
     public function attributeLabels()
@@ -37,7 +37,7 @@ class BookForm extends Model
             'longDescription' => 'Полное описание',
             'status' => 'Статус',
             'categoryId' => 'Категория',
-            'authors' => 'Авторы',
+            'authors' => 'Авторы (через запятую)',
         ];
     }
 
@@ -46,6 +46,7 @@ class BookForm extends Model
         return [
             [['isbn', 'title', 'pageCount', 'publishedDate', 'status', 'categoryId', 'authors'], 'required'],
             ['isbn', 'string', 'min' => 5, 'max' => 20],
+            ['isbn', 'unique', 'targetClass' => Book::class, 'targetAttribute' => 'isbn'],
             ['title', 'string', 'max' => 50],
             ['pageCount', 'integer', 'min' => 1, 'max' => 100000],
             ['publishedDate', 'date', 'format' => 'yyyy-MM-dd'],
@@ -95,10 +96,9 @@ class BookForm extends Model
      * @throws Exception
      * @throws InvalidConfigException
      */
-    public function toModel(): Book
+    public function saveToModel(Book $book): void
     {
-        $book = Book::findOne(['isbn' => $this->isbn]) ?? new Book(['isbn' => $this->isbn]);
-
+        $book->isbn = $this->isbn;
         $book->title = $this->title;
         $book->pageCount = $this->pageCount;
         $book->publishedDate = $this->publishedDate;
@@ -116,7 +116,5 @@ class BookForm extends Model
         foreach ($absentAuthorIds as $authorId) {
             $book->link('authors', $authors[$authorId]);
         }
-
-        return $book;
     }
 }

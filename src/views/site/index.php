@@ -17,13 +17,15 @@ $this->title = 'Категории';
             <?= Html::a($category->name, ['site/category', 'categoryId' => $category->id]) ?>
             <div class="badge rounded-pill justify-content-between">
                 <?php
-                echo Html::a('Редактировать', ['admin/category', 'categoryId' => $category->id], [
-                    'class' => 'btn btn-link',
-                ]);
+                if (!Yii::$app->user->isGuest) {
+                    echo Html::a('Редактировать', ['admin/category', 'categoryId' => $category->id], [
+                        'class' => 'btn btn-link',
+                    ]);
 
-                echo Html::beginForm(['admin/category', 'categoryId' => $category->id], 'delete');
-                echo Html::submitButton('Удалить', ['class' => 'btn btn-link', 'data-confirm' => 'Вы действительно хотите удалить категорию?']);
-                echo Html::endForm();
+                    echo Html::beginForm(['admin/category', 'categoryId' => $category->id], 'delete');
+                    echo Html::submitButton('Удалить', ['class' => 'btn btn-link', 'data-confirm' => 'Вы действительно хотите удалить категорию?']);
+                    echo Html::endForm();
+                }
                 ?>
             </div>
         </li>

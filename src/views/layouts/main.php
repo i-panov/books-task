@@ -54,6 +54,7 @@ function renderLogoutButton(): string
 
     $navItems = [
         ['label' => 'Обратная связь', 'url' => ['site/contact']],
+        ['label' => 'Войти в админку', 'url' => ['admin/login']],
     ];
 
     if (!Yii::$app->user->isGuest) {

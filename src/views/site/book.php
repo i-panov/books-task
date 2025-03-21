@@ -32,9 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="form-group">
     <?php
-    echo Html::a('Редактировать', ['admin/book', 'isbn' => $book->isbn], ['class' => 'btn btn-link']);
-    echo Html::beginForm(['admin/book', 'isbn' => $book->isbn], 'delete');
-    echo Html::submitButton('Удалить', ['class' => 'btn btn-link', 'data-confirm' => 'Вы действительно хотите удалить книгу?']);
-    echo Html::endForm();
+    if (!Yii::$app->user->isGuest) {
+        echo Html::a('Редактировать', ['admin/book', 'isbn' => $book->isbn], ['class' => 'btn btn-link']);
+        echo Html::beginForm(['admin/book', 'isbn' => $book->isbn], 'delete');
+        echo Html::submitButton('Удалить', ['class' => 'btn btn-link', 'data-confirm' => 'Вы действительно хотите удалить книгу?']);
+        echo Html::endForm();
+    }
     ?>
 </div>

@@ -54,13 +54,14 @@ function renderLogoutButton(): string
 
     $navItems = [
         ['label' => 'Обратная связь', 'url' => ['site/contact']],
-        ['label' => 'Войти в админку', 'url' => ['admin/login']],
     ];
 
     if (!Yii::$app->user->isGuest) {
         $navItems[] = ['label' => 'Добавить категорию', 'url' => ['admin/category']];
         $navItems[] = ['label' => 'Добавить книгу', 'url' => ['admin/book']];
         $navItems[] = renderLogoutButton();
+    } else {
+        $navItems[] = ['label' => 'Войти в админку', 'url' => ['admin/login']];
     }
 
     echo Nav::widget([
